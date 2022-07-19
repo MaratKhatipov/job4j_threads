@@ -48,11 +48,7 @@ public class WgetDownload implements Runnable {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        /*
-        url = http://speedtest.ftp.otenet.gr/files/test10Mb.db
-        speed = 1048576
-        targetFile = D:\testTMP.db
-         */
+
         String url = args[0];
         String targetFile = args[2];
         int speed = Integer.parseInt(args[1]);
