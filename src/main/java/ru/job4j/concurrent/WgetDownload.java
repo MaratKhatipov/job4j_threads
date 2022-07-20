@@ -47,8 +47,14 @@ public class WgetDownload implements Runnable {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void validator(int argsNum) {
+            if (argsNum < 3) {
+                throw new IllegalArgumentException("Недостаточно аргументов");
+            }
+    }
 
+    public static void main(String[] args) throws InterruptedException {
+        validator(args.length);
         String url = args[0];
         String targetFile = args[2];
         int speed = Integer.parseInt(args[1]);
