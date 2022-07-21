@@ -6,7 +6,7 @@ public final class SaveContent {
     private final File file;
 
     public SaveContent(File file) {
-        this.file = new File(file.toString());
+        this.file = file;
     }
 
     public synchronized void saveContent(String content) {

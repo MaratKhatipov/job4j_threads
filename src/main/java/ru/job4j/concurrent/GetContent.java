@@ -11,8 +11,9 @@ public final class GetContent {
     private final File file;
 
     public GetContent(File file) {
-        this.file = new File(file.toString());
+        this.file = file;
     }
+
 
     public String predicateContent(Predicate<Character> filter) {
         StringBuilder output = new StringBuilder();
@@ -20,7 +21,7 @@ public final class GetContent {
             try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
                 int data;
                 char charData;
-                while ((data = bis.read()) != 1) {
+                while ((data = bis.read()) != -1) {
                     charData = (char) data;
                     if (filter.test(charData)) {
                         output.append(charData);
