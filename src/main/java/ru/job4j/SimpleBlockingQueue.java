@@ -17,17 +17,13 @@ public class SimpleBlockingQueue<T> {
         this.maxSize = maxSize;
     }
 
-    public void offer(T value) {
+    public void offer(T value) throws InterruptedException {
         synchronized (this) {
             while (queue.size() >= maxSize) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                    this.wait();
             }
             queue.offer(value);
-            notifyAll();
+            this.notifyAll();
         }
     }
 
@@ -43,7 +39,7 @@ public class SimpleBlockingQueue<T> {
             this.wait();
         }
         T result = queue.poll();
-        notifyAll();
+        this.notifyAll();
         return result;
     }
 

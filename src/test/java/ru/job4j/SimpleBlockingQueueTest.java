@@ -14,7 +14,11 @@ class SimpleBlockingQueueTest {
         int[] actual = new int[5];
         Thread producer = new Thread(() -> {
             for (int i : expect) {
-                test.offer(i);
+                try {
+                    test.offer(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         Thread consumer = new Thread(() -> {
