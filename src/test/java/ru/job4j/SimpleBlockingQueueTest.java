@@ -36,5 +36,4 @@ class SimpleBlockingQueueTest {
         consumer.join();
         assertArrayEquals(expect, actual);
     }
-
 }
