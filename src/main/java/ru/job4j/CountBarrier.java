@@ -28,7 +28,6 @@ public class CountBarrier {
         synchronized (monitor) {
             while (count < total) {
                 try {
-                    System.out.println("count - " + count + " total - " + total);
                     monitor.wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -42,15 +41,19 @@ public class CountBarrier {
         Thread first = new Thread(
                 () -> {
                     System.out.println(Thread.currentThread().getName());
-                    test.count();
+                    for (int i = 0; i < 6; i++) {
+                        test.count();
+                    }
+
                 }, "count method"
         );
 
         Thread second = new Thread(
                 () -> {
-                    System.out.println(Thread.currentThread().getName());
+                    System.out.println("Waiting...");
                     test.await();
-                }, "AWAIT method"
+                    System.out.println("Done!");
+                }
         );
         first.start();
         second.start();
