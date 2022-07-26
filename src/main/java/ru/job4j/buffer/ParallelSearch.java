@@ -31,8 +31,8 @@ public class ParallelSearch {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        consumer.interrupt();
                     }
+                    consumer.interrupt();
                 }
 
         ).start();
