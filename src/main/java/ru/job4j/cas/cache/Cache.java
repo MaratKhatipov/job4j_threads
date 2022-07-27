@@ -21,11 +21,15 @@ public class Cache {
             newModel.setName(model.getName());
             return newModel;
         };
-        memory.computeIfPresent(model.getId(), updateFunction);
-        return false;
+
+        return memory.computeIfPresent(model.getId(), updateFunction) != null;
     }
 
     public void delete(Base model) {
         memory.remove(model.getId());
+    }
+
+    public Base getById(int id) {
+        return memory.get(id);
     }
 }
