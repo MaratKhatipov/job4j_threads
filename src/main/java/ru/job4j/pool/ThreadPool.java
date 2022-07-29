@@ -4,15 +4,13 @@ import ru.job4j.SimpleBlockingQueue;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadPool {
     private final List<Thread> threads = new LinkedList<>();
-    private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(8);
-
+    int size = Runtime.getRuntime().availableProcessors();
+    private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(size);
 
     public ThreadPool() {
-        int size = Runtime.getRuntime().availableProcessors();
         for (int i = 0; i <= size; i++) {
             Thread threadInit = new Thread(() -> {
                 while (!tasks.isEmpty() || !Thread.currentThread().isInterrupted()) {
@@ -28,12 +26,8 @@ public class ThreadPool {
         }
     }
 
-    public synchronized void work(Runnable job) {
-        try {
+    public synchronized void work(Runnable job) throws InterruptedException {
             tasks.offer(job);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void shutdown() {
@@ -41,15 +35,11 @@ public class ThreadPool {
 
     }
 
-    public static void main(String[] args) {
-        int[] index = {0};
+    public static void main(String[] args) throws InterruptedException {
         ThreadPool test = new ThreadPool();
-        for (int i = 0; i < 10; i++) {
-            test.work(() -> {
-                index[0]++;
-            });
+        for (int i = 0; i < 15; i++) {
+            test.work(() -> System.out.println("Execute " + Thread.currentThread().getName()));
         }
-        System.out.print(index[0]);
         test.shutdown();
     }
 }
