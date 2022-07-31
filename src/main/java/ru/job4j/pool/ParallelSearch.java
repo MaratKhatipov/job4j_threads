@@ -42,7 +42,7 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
     }
 
     private int linearSearchIndex(T element, int from, int to) {
-        for (int i = from; i < to; i++) {
+        for (int i = from; i <= to; i++) {
             if (element.equals(array[i])) {
                 return i;
             }
@@ -52,12 +52,6 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
 
     public static <T> int indexOf(T[] arr, T elem) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        return forkJoinPool.invoke(new ParallelSearch<>(arr, 0, arr.length, elem));
-    }
-
-    public static void main(String[] args) {
-        Integer[] test = {5, 7, 8, 8, 0, 4, 2, 5, 1, 6, 8, 15, 2, 6, 7};
-        System.out.println(Arrays.toString(test));
-        System.out.println("Index is : " + ParallelSearch.indexOf(test, 5));
+        return forkJoinPool.invoke(new ParallelSearch<>(arr, 0, arr.length - 1, elem));
     }
 }
