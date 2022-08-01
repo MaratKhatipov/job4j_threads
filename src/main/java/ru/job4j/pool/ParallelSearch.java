@@ -7,6 +7,7 @@ import java.util.concurrent.RecursiveTask;
 import static java.lang.Math.max;
 
 public class ParallelSearch<T> extends RecursiveTask<Integer> {
+    private final static int LIMIT = 10;
     private final T[] array;
     private final int from;
     private final int to;
@@ -26,9 +27,8 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
      */
     @Override
     protected Integer compute() {
-        int limit = 10;
         int len = to - from;
-        if (len < limit) {
+        if (len < LIMIT) {
             return linearSearchIndex(element, from, to);
         }
         int mid = len / 2;
