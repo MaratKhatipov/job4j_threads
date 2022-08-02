@@ -1,27 +1,18 @@
 package ru.job4j.example.leetcode;
 
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.Arrays;
 
 public class KthSmallest378 {
     public int kthSmallest(int[][] matrix, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-
         int n = matrix.length;
-
-        for (int i = 0; i < n; i++) {
+        int[] res = new int[n * n];
+        int index = 0;
+        for (int[] ints : matrix) {
             for (int j = 0; j < n; j++) {
-                if (pq.size() < k) {
-                    pq.add(matrix[i][j]);
-                } else { //equal to k
-                    if (matrix[i][j] < pq.peek()) {
-                        pq.poll();
-                        pq.add(matrix[i][j]);
-                    }
-                }
+                res[index++] = ints[j];
             }
         }
-
-        return pq.peek();
+        Arrays.sort(res);
+        return res[k - 1];
     }
 }
